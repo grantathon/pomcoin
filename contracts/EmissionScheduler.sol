@@ -21,6 +21,6 @@ contract EmissionScheduler {
   uint finalAnnualEmissionRate = 50; /* 50 basis points or 0.5% */
 
   constructor() {
-    start = now;
+    start = block.timestamp;
   }
 }
