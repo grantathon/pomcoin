@@ -13,23 +13,21 @@ module.exports = {
   },
   contracts_build_directory: path.join(__dirname, "client/src/contracts"),
   networks: {
+    // ganache-cli -f https://bsc-dataseed1.binance.org/
+    // ganache-cli -f https://data-seed-prebsc-1-s1.binance.org:8545/
     development: {
-      port: 7545,
+      port: 8545,
       host: "127.0.0.1",
-      network_id: 5777
+      network_id: "*"
     },
-    ganache_local: {
-      provider: () => new HDWalletProvider(process.env.MNEMONIC, "http://127.0.0.1:7545", AccountIndex),
-      network_id: 5777
-    },
-    bsc_testnet: {
-      provider: () => new HDWalletProvider(process.env.MNEMONIC, "https://data-seed-prebsc-1-s1.binance.org:8545", AccountIndex),
-      network_id: 97,
-      confirmations: 10,
-      timeoutBlocks: 200,
-      skipDryRun: true
-    },
-    // bsc_mainnet: {
+    // testnet: {
+    //   provider: () => new HDWalletProvider(process.env.MNEMONIC, "https://data-seed-prebsc-1-s1.binance.org:8545", AccountIndex),
+    //   network_id: 97,
+    //   confirmations: 10,
+    //   timeoutBlocks: 200,
+    //   skipDryRun: true
+    // },
+    // mainnet: {
     //   provider: () => new HDWalletProvider(mnemonic, `https://bsc-dataseed1.binance.org`),
     //   network_id: 56,
     //   confirmations: 10,
