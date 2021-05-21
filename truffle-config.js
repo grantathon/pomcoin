@@ -15,7 +15,7 @@ module.exports = {
   networks: {
     // ganache-cli -f https://bsc-dataseed1.binance.org/
     // ganache-cli -f https://data-seed-prebsc-1-s1.binance.org:8545/
-    test: {
+    development: {
       port: 7545,
       host: "127.0.0.1",
       network_id: "*"

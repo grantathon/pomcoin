@@ -10,6 +10,10 @@ contract Pomcoin is BEP20 {
     _mint(msg.sender, initialSupply * 10 ** 18);
   }
 
+  receive() external payable {
+    
+  }
+
   /* function swapAndLiquify(uint256 contractTokenBalance) private {
     // split the contract balance into halves
     uint256 half = contractTokenBalance.div(2);
