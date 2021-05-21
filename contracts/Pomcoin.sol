@@ -5,17 +5,12 @@ import "@pancakeswap/pancake-swap-lib/contracts/token/BEP20/BEP20.sol";
 
 /* TODO: Convert Safemoon ERC20 liquidity functionality to BEP20 */
 
-contract Pomcoin is BEP20("Pomcoin", "POM") {
-
-  bool inSwapAndLiquify;
-
-  modifier lockTheSwap {
-      inSwapAndLiquify = true;
-      _;
-      inSwapAndLiquify = false;
+contract Pomcoin is BEP20 {
+  constructor(uint initialSupply) BEP20("Pomcoin", "POM") public {
+    _mint(msg.sender, initialSupply * 10 ** 18);
   }
 
-  function swapAndLiquify(uint256 contractTokenBalance) private lockTheSwap {
+  /* function swapAndLiquify(uint256 contractTokenBalance) private {
     // split the contract balance into halves
     uint256 half = contractTokenBalance.div(2);
     uint256 otherHalf = contractTokenBalance.sub(half);
@@ -69,6 +64,6 @@ contract Pomcoin is BEP20("Pomcoin", "POM") {
       owner(),
       block.timestamp
     );
-  }
+  } */
 
 }

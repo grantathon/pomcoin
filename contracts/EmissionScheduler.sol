@@ -6,9 +6,7 @@ import "./Pomcoin.sol";
 contract EmissionScheduler {
   uint start;
 
-  uint public initialSupply = 350000000;
-
-  uint[7] memory initialYearlyEmissions = [
+  uint[7] initialYearlyEmissions = [
     3500000000,
     1750000000,
     875000000,
@@ -20,7 +18,7 @@ contract EmissionScheduler {
 
   uint finalAnnualEmissionRate = 50; /* 50 basis points or 0.5% */
 
-  constructor() {
+  constructor() public {
     start = block.timestamp;
   }
 }

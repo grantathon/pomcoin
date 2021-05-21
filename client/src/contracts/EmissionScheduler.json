@@ -1,0 +1,909 @@
+{
+  "contractName": "EmissionScheduler",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.12+commit.27d51765\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/home/grant/Development/solidity_fun/pomcoin/contracts/EmissionScheduler.sol\":\"EmissionScheduler\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/grant/Development/solidity_fun/pomcoin/contracts/EmissionScheduler.sol\":{\"keccak256\":\"0x0aec589bcbb3d2f3782a01e99cb35424c09dc1414b09d6b236aa862aa0d802fd\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cf3a47b96de97da2d5f786f1e89a3f66c122d2c2c44487bc67518e3e7fd0e504\",\"dweb:/ipfs/QmWc6WcmPQ5A4eQ8ttMsGveQDvU11JmFhFAGa9z2mZibNe\"]},\"/home/grant/Development/solidity_fun/pomcoin/contracts/Pomcoin.sol\":{\"keccak256\":\"0xd3a21a4eb66ec8d1d1d90abe254243cc4e0f80405685da165bfa724d49296369\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7cbf58cfb8522d5ee2b9413ec0c71be11f6def4d6c561a0e23a2b2a91731cae0\",\"dweb:/ipfs/QmV3RWfiZpVuvGPMB83qZWMSB9SHcS6bWeYgRMPV741FEx\"]},\"@pancakeswap/pancake-swap-lib/contracts/GSN/Context.sol\":{\"keccak256\":\"0xb5d5654ea9545f91be35321202e885255490867560afbc0c6a55f8b6c4068386\",\"license\":\"GPL-3.0-or-later\",\"urls\":[\"bzz-raw://ad45743b2fb8322c467618955a89bb82e40b6b730f19c04bf4b0e5eb6d25f39b\",\"dweb:/ipfs/QmR7HdkW9VsAeiSQRrA3LntW36RCv5iczoLkBcQpTc2UYo\"]},\"@pancakeswap/pancake-swap-lib/contracts/access/Ownable.sol\":{\"keccak256\":\"0xe4099b9c99c22b28d8c1676803e2ff6f34ddc043d1e8631476e8e417c81aa7a3\",\"license\":\"GPL-3.0-or-later\",\"urls\":[\"bzz-raw://dc140c98056178b731be974f42d523134258162fdf379ef6ed2eeb234fc067df\",\"dweb:/ipfs/QmZNQ3FNYS17E2HjyX4eqk7RYfSJtaG5b47W27xatJjNeo\"]},\"@pancakeswap/pancake-swap-lib/contracts/math/SafeMath.sol\":{\"keccak256\":\"0xd4b1686c1494213666dc1423cea64333c3063f334327216d69ca3d59f75a2517\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3a3c967dc005a8966266b6052724b7cd04231c6d95abcc03f49e1cbb9ffb890a\",\"dweb:/ipfs/QmRWofmmac5HLRYpMTDQLzmgZyJYeYLB2MY8uTFRKfJuJL\"]},\"@pancakeswap/pancake-swap-lib/contracts/token/BEP20/BEP20.sol\":{\"keccak256\":\"0x0442404a56112b52de7e4a64eb0d9fe346add08d122b52e848e43c9f22d707c5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://abbecb866acdd459f567efac348a519758c46ca0b53415c484b28b2d28c7b19f\",\"dweb:/ipfs/Qmdo86JSfRcqoMr6Z2H3k1NMZQ6qZCSvSihzCb5Eq7d8DJ\"]},\"@pancakeswap/pancake-swap-lib/contracts/token/BEP20/IBEP20.sol\":{\"keccak256\":\"0xcca9eeefad9d3c8a68e426833a5c790d055beebc3f1cefbeac20b096456c9aef\",\"license\":\"GPL-3.0-or-later\",\"urls\":[\"bzz-raw://61090ac66da4fcf117cb95119cda4c45b5bcf9f8a48203444b0f97b39a9ccbd1\",\"dweb:/ipfs/Qmb1XnfUGdZ7ma31WqhGMaE9mWug1erEUh8xEYvvjZ5v4r\"]},\"@pancakeswap/pancake-swap-lib/contracts/utils/Address.sol\":{\"keccak256\":\"0x806c8686fdf1afac78d0828ca7941e5ac30282a358d23cf502ec39893c64d4af\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://be41cfa7e8aaf4c95e1517007964cef2470abd47ad578293db4cd25434ee77ea\",\"dweb:/ipfs/QmPX9qcHJNv1vA6Nxue8c46wxdXwKdLcUyXxEQ91F93u7a\"]}},\"version\":1}",
+  "bytecode": "0x60806040526040518060e0016040528063d09dc30063ffffffff16815260200163684ee18063ffffffff16815260200163342770c063ffffffff168152602001631a13b86063ffffffff168152602001630d09dc3063ffffffff168152602001630684ee1863ffffffff168152602001630342770c63ffffffff16815250600190600761008d9291906100ac565b50603260085534801561009f57600080fd5b5042600081905550610111565b82600781019282156100e3579160200282015b828111156100e2578251829063ffffffff169055916020019190600101906100bf565b5b5090506100f091906100f4565b5090565b5b8082111561010d5760008160009055506001016100f5565b5090565b603f8061011f6000396000f3fe6080604052600080fdfea26469706673582212209d89ad2b42efa79100ba103035efb58be94db24d8e06e534d23a1a0e6192e28264736f6c634300060c0033",
+  "deployedBytecode": "0x6080604052600080fdfea26469706673582212209d89ad2b42efa79100ba103035efb58be94db24d8e06e534d23a1a0e6192e28264736f6c634300060c0033",
+  "immutableReferences": {},
+  "sourceMap": "82:574:0:-:0;;;278:143;;;;;;;;317:10;278:143;;;;;;333:10;278:143;;;;;;349:9;278:143;;;;;;364:9;278:143;;;;;;379:9;278:143;;;;;;394:9;278:143;;;;;;409:8;278:143;;;;;;;;;;;;;:::i;:::-;;457:2;426:33;;494:160;;;;;;;;;;634:15;626:5;:23;;;;82:574;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;",
+  "deployedSourceMap": "82:574:0:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity 0.6.12;\n\nimport \"./Pomcoin.sol\";\n\ncontract EmissionScheduler {\n  /* uint pomcoinDecimals; */\n\n  uint start;\n\n  /* uint public initialSupply = 350000000; */\n  /* uint public initialSupply = 350000000 * 10 ** pomcoinDecimals; */\n\n  uint[7] initialYearlyEmissions = [\n    3500000000,\n    1750000000,\n    875000000,\n    437500000,\n    218750000,\n    109375000,\n    54687500\n  ];\n\n  uint finalAnnualEmissionRate = 50; /* 50 basis points or 0.5% */\n\n  constructor() public {\n  /* constructor(uint8 _pomcoinDecimals) public { */\n    /* pomcoinDecimals = uint(_pomcoinDecimals); */\n    start = block.timestamp;\n  }\n}\n",
+  "sourcePath": "/home/grant/Development/solidity_fun/pomcoin/contracts/EmissionScheduler.sol",
+  "ast": {
+    "absolutePath": "/home/grant/Development/solidity_fun/pomcoin/contracts/EmissionScheduler.sol",
+    "exportedSymbols": {
+      "EmissionScheduler": [
+        29
+      ]
+    },
+    "id": 30,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          "0.6",
+          ".12"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:0"
+      },
+      {
+        "absolutePath": "/home/grant/Development/solidity_fun/pomcoin/contracts/Pomcoin.sol",
+        "file": "./Pomcoin.sol",
+        "id": 2,
+        "nodeType": "ImportDirective",
+        "scope": 30,
+        "sourceUnit": 56,
+        "src": "57:23:0",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 29,
+        "linearizedBaseContracts": [
+          29
+        ],
+        "name": "EmissionScheduler",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 4,
+            "mutability": "mutable",
+            "name": "start",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 29,
+            "src": "144:10:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 3,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "144:4:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 16,
+            "mutability": "mutable",
+            "name": "initialYearlyEmissions",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 29,
+            "src": "278:143:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_uint256_$7_storage",
+              "typeString": "uint256[7]"
+            },
+            "typeName": {
+              "baseType": {
+                "id": 5,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "278:4:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "id": 7,
+              "length": {
+                "argumentTypes": null,
+                "hexValue": "37",
+                "id": 6,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "kind": "number",
+                "lValueRequested": false,
+                "nodeType": "Literal",
+                "src": "283:1:0",
+                "subdenomination": null,
+                "typeDescriptions": {
+                  "typeIdentifier": "t_rational_7_by_1",
+                  "typeString": "int_const 7"
+                },
+                "value": "7"
+              },
+              "nodeType": "ArrayTypeName",
+              "src": "278:7:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_uint256_$7_storage_ptr",
+                "typeString": "uint256[7]"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "components": [
+                {
+                  "argumentTypes": null,
+                  "hexValue": "33353030303030303030",
+                  "id": 8,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "number",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "317:10:0",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_rational_3500000000_by_1",
+                    "typeString": "int_const 3500000000"
+                  },
+                  "value": "3500000000"
+                },
+                {
+                  "argumentTypes": null,
+                  "hexValue": "31373530303030303030",
+                  "id": 9,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "number",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "333:10:0",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_rational_1750000000_by_1",
+                    "typeString": "int_const 1750000000"
+                  },
+                  "value": "1750000000"
+                },
+                {
+                  "argumentTypes": null,
+                  "hexValue": "383735303030303030",
+                  "id": 10,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "number",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "349:9:0",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_rational_875000000_by_1",
+                    "typeString": "int_const 875000000"
+                  },
+                  "value": "875000000"
+                },
+                {
+                  "argumentTypes": null,
+                  "hexValue": "343337353030303030",
+                  "id": 11,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "number",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "364:9:0",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_rational_437500000_by_1",
+                    "typeString": "int_const 437500000"
+                  },
+                  "value": "437500000"
+                },
+                {
+                  "argumentTypes": null,
+                  "hexValue": "323138373530303030",
+                  "id": 12,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "number",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "379:9:0",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_rational_218750000_by_1",
+                    "typeString": "int_const 218750000"
+                  },
+                  "value": "218750000"
+                },
+                {
+                  "argumentTypes": null,
+                  "hexValue": "313039333735303030",
+                  "id": 13,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "number",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "394:9:0",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_rational_109375000_by_1",
+                    "typeString": "int_const 109375000"
+                  },
+                  "value": "109375000"
+                },
+                {
+                  "argumentTypes": null,
+                  "hexValue": "3534363837353030",
+                  "id": 14,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "number",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "409:8:0",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_rational_54687500_by_1",
+                    "typeString": "int_const 54687500"
+                  },
+                  "value": "54687500"
+                }
+              ],
+              "id": 15,
+              "isConstant": false,
+              "isInlineArray": true,
+              "isLValue": false,
+              "isPure": true,
+              "lValueRequested": false,
+              "nodeType": "TupleExpression",
+              "src": "311:110:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_uint32_$7_memory_ptr",
+                "typeString": "uint32[7] memory"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 19,
+            "mutability": "mutable",
+            "name": "finalAnnualEmissionRate",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 29,
+            "src": "426:33:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 17,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "426:4:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "3530",
+              "id": 18,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "457:2:0",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_50_by_1",
+                "typeString": "int_const 50"
+              },
+              "value": "50"
+            },
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 27,
+              "nodeType": "Block",
+              "src": "515:139:0",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 25,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 22,
+                      "name": "start",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 4,
+                      "src": "626:5:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 23,
+                        "name": "block",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": -4,
+                        "src": "634:5:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_block",
+                          "typeString": "block"
+                        }
+                      },
+                      "id": 24,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "timestamp",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "634:15:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "626:23:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 26,
+                  "nodeType": "ExpressionStatement",
+                  "src": "626:23:0"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 28,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 20,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "505:2:0"
+            },
+            "returnParameters": {
+              "id": 21,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "515:0:0"
+            },
+            "scope": 29,
+            "src": "494:160:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 30,
+        "src": "82:574:0"
+      }
+    ],
+    "src": "32:625:0"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/home/grant/Development/solidity_fun/pomcoin/contracts/EmissionScheduler.sol",
+      "exportedSymbols": {
+        "EmissionScheduler": [
+          29
+        ]
+      },
+      "license": "MIT"
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "0.6",
+            ".12"
+          ]
+        },
+        "id": 1,
+        "name": "PragmaDirective",
+        "src": "32:23:0"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 56,
+          "absolutePath": "/home/grant/Development/solidity_fun/pomcoin/contracts/Pomcoin.sol",
+          "file": "./Pomcoin.sol",
+          "scope": 30,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 2,
+        "name": "ImportDirective",
+        "src": "57:23:0"
+      },
+      {
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            29
+          ],
+          "name": "EmissionScheduler",
+          "scope": 30
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "mutability": "mutable",
+              "name": "start",
+              "overrides": null,
+              "scope": 29,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 3,
+                "name": "ElementaryTypeName",
+                "src": "144:4:0"
+              }
+            ],
+            "id": 4,
+            "name": "VariableDeclaration",
+            "src": "144:10:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "mutability": "mutable",
+              "name": "initialYearlyEmissions",
+              "overrides": null,
+              "scope": 29,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256[7]",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "uint256[7]"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 5,
+                    "name": "ElementaryTypeName",
+                    "src": "278:4:0"
+                  },
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "hexvalue": "37",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "subdenomination": null,
+                      "token": "number",
+                      "type": "int_const 7",
+                      "value": "7"
+                    },
+                    "id": 6,
+                    "name": "Literal",
+                    "src": "283:1:0"
+                  }
+                ],
+                "id": 7,
+                "name": "ArrayTypeName",
+                "src": "278:7:0"
+              },
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "isConstant": false,
+                  "isInlineArray": true,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "type": "uint32[7] memory"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "hexvalue": "33353030303030303030",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "subdenomination": null,
+                      "token": "number",
+                      "type": "int_const 3500000000",
+                      "value": "3500000000"
+                    },
+                    "id": 8,
+                    "name": "Literal",
+                    "src": "317:10:0"
+                  },
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "hexvalue": "31373530303030303030",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "subdenomination": null,
+                      "token": "number",
+                      "type": "int_const 1750000000",
+                      "value": "1750000000"
+                    },
+                    "id": 9,
+                    "name": "Literal",
+                    "src": "333:10:0"
+                  },
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "hexvalue": "383735303030303030",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "subdenomination": null,
+                      "token": "number",
+                      "type": "int_const 875000000",
+                      "value": "875000000"
+                    },
+                    "id": 10,
+                    "name": "Literal",
+                    "src": "349:9:0"
+                  },
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "hexvalue": "343337353030303030",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "subdenomination": null,
+                      "token": "number",
+                      "type": "int_const 437500000",
+                      "value": "437500000"
+                    },
+                    "id": 11,
+                    "name": "Literal",
+                    "src": "364:9:0"
+                  },
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "hexvalue": "323138373530303030",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "subdenomination": null,
+                      "token": "number",
+                      "type": "int_const 218750000",
+                      "value": "218750000"
+                    },
+                    "id": 12,
+                    "name": "Literal",
+                    "src": "379:9:0"
+                  },
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "hexvalue": "313039333735303030",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "subdenomination": null,
+                      "token": "number",
+                      "type": "int_const 109375000",
+                      "value": "109375000"
+                    },
+                    "id": 13,
+                    "name": "Literal",
+                    "src": "394:9:0"
+                  },
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "hexvalue": "3534363837353030",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "subdenomination": null,
+                      "token": "number",
+                      "type": "int_const 54687500",
+                      "value": "54687500"
+                    },
+                    "id": 14,
+                    "name": "Literal",
+                    "src": "409:8:0"
+                  }
+                ],
+                "id": 15,
+                "name": "TupleExpression",
+                "src": "311:110:0"
+              }
+            ],
+            "id": 16,
+            "name": "VariableDeclaration",
+            "src": "278:143:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "mutability": "mutable",
+              "name": "finalAnnualEmissionRate",
+              "overrides": null,
+              "scope": 29,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 17,
+                "name": "ElementaryTypeName",
+                "src": "426:4:0"
+              },
+              {
+                "attributes": {
+                  "argumentTypes": null,
+                  "hexvalue": "3530",
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "subdenomination": null,
+                  "token": "number",
+                  "type": "int_const 50",
+                  "value": "50"
+                },
+                "id": 18,
+                "name": "Literal",
+                "src": "457:2:0"
+              }
+            ],
+            "id": 19,
+            "name": "VariableDeclaration",
+            "src": "426:33:0"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "implemented": true,
+              "isConstructor": true,
+              "kind": "constructor",
+              "modifiers": [
+                null
+              ],
+              "name": "",
+              "overrides": null,
+              "scope": 29,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 20,
+                "name": "ParameterList",
+                "src": "505:2:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 21,
+                "name": "ParameterList",
+                "src": "515:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4,
+                              "type": "uint256",
+                              "value": "start"
+                            },
+                            "id": 22,
+                            "name": "Identifier",
+                            "src": "626:5:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "timestamp",
+                              "referencedDeclaration": null,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": -4,
+                                  "type": "block",
+                                  "value": "block"
+                                },
+                                "id": 23,
+                                "name": "Identifier",
+                                "src": "634:5:0"
+                              }
+                            ],
+                            "id": 24,
+                            "name": "MemberAccess",
+                            "src": "634:15:0"
+                          }
+                        ],
+                        "id": 25,
+                        "name": "Assignment",
+                        "src": "626:23:0"
+                      }
+                    ],
+                    "id": 26,
+                    "name": "ExpressionStatement",
+                    "src": "626:23:0"
+                  }
+                ],
+                "id": 27,
+                "name": "Block",
+                "src": "515:139:0"
+              }
+            ],
+            "id": 28,
+            "name": "FunctionDefinition",
+            "src": "494:160:0"
+          }
+        ],
+        "id": 29,
+        "name": "ContractDefinition",
+        "src": "82:574:0"
+      }
+    ],
+    "id": 30,
+    "name": "SourceUnit",
+    "src": "32:625:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.12+commit.27d51765.Emscripten.clang"
+  },
+  "networks": {
+    "56": {
+      "events": {},
+      "links": {},
+      "address": "0xc11b7770302BE8ec4440132dA48C4105f6Cb5751",
+      "transactionHash": "0x28c65a8068b613e146d0ec2427f28957954570e0db6d211317b2ec693e51958a"
+    }
+  },
+  "schemaVersion": "3.4.1",
+  "updatedAt": "2021-05-21T08:01:15.107Z",
+  "networkType": "ethereum",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
