@@ -7,11 +7,11 @@ import "@pancakeswap/pancake-swap-lib/contracts/token/BEP20/BEP20.sol";
 
 contract Pomcoin is BEP20 {
   constructor(uint initialSupply) BEP20("Pomcoin", "POM") public {
-    _mint(msg.sender, initialSupply * 10 ** 18);
+    _mint(msg.sender, initialSupply.mul(10 ** uint(decimals())));
   }
 
   receive() external payable {
-    
+
   }
 
   /* function swapAndLiquify(uint256 contractTokenBalance) private {

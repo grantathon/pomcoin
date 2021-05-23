@@ -11,20 +11,13 @@ PANCAKESWAP_ROUTER_ADDR = "0x10ED43C718714eb63d5aA57B78B54704E256024E";  // Main
 WBNB_ADDR = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
 
 module.exports = async function(deployer) {
-  await deployer.deploy(Pomcoin, 350000000);
+  await deployer.deploy(Pomcoin, 350000000);  // TODO: Remove "magic number"
   await deployer.deploy(EmissionScheduler);
 
   const instancePomcoin = await Pomcoin.deployed();
-
-  // Send Pomcoin contract BNB for initial liquidity
   const creator = await instancePomcoin.getOwner();
-  await web3.eth.sendTransaction({
-    from: creator,
-    to: Pomcoin.address,
-    value: web3.utils.toWei("2", "ether")
-  });
 
-  // TODO: Permanently stake initial liquidity to DEX
+  // Create liquidity pool pair
   var factory = await new web3.eth.Contract(pancakeswapFactoryAbi, PANCAKESWAP_FACTORY_ADDR);
   var router = await new web3.eth.Contract(pancakeswapRouterAbi, PANCAKESWAP_ROUTER_ADDR);
   const weth = await router.methods.WETH().call();
@@ -32,16 +25,21 @@ module.exports = async function(deployer) {
     from: creator,
     gas: 5000000
   });
-  await instancePomcoin.approve(PANCAKESWAP_ROUTER_ADDR, 350000000);
+
+  // Permanently stake initial liquidity
+  var creatorPomBalance = await instancePomcoin.balanceOf(creator);
+  await instancePomcoin.approve(PANCAKESWAP_ROUTER_ADDR, creatorPomBalance);
+  const ethForLiquidityPool = await web3.utils.toWei("1", "ether");
   await router.methods.addLiquidityETH(
     Pomcoin.address,
-    350000000,
-    350000000,
-    web3.utils.toWei("1", "ether"),
-    creator,  // TODO: Change to Pomcoin address
+    creatorPomBalance,
+    creatorPomBalance,
+    ethForLiquidityPool,
+    Pomcoin.address,  // Pomcoin owns the LP token, not creator
     Math.floor(Date.now() / 1000) + 60 * 10
   ).send({
     from: creator,
-    gas: 5000000
+    gas: 5000000,
+    value: ethForLiquidityPool
   });
 };
