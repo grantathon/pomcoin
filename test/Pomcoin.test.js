@@ -48,4 +48,8 @@ contract("Pomcoin Tests", async (accounts) => {
     expect(pairAddress).to.not.equal("0x0000000000000000000000000000000000000000");
     return expect(liquidity).to.be.a.bignumber.equal((new BN(pairTotalSupply)).sub(new BN(1000)));
   });
+
+  it("should transfer balance to LP", async () => {
+    
+  });
 });

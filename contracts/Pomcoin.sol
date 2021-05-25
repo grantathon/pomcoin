@@ -2,51 +2,67 @@
 pragma solidity 0.6.12;
 
 import "@pancakeswap/pancake-swap-lib/contracts/token/BEP20/BEP20.sol";
-
-/* TODO: Convert Safemoon ERC20 liquidity functionality to BEP20 */
+import "pancakeswap-peripheral/contracts/interfaces/IPancakeRouter02.sol";
 
 contract Pomcoin is BEP20 {
+  IPancakeRouter02 pancakeRouterV2;
+
+  event SwapAndLiquify(uint tokensIntoLiqudity, uint ethIntoLiquidity);
+
   constructor(uint initialSupply) BEP20("Pomcoin", "POM") public {
+    pancakeRouterV2 = IPancakeRouter02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
+
     _mint(msg.sender, initialSupply.mul(10 ** uint(decimals())));
   }
 
   receive() external payable {
-
+    // Transfer balance to permanent liquidity pool
+    swapAndLiquifyBalance();
   }
 
-  /* function swapAndLiquify(uint256 contractTokenBalance) private {
-    // split the contract balance into halves
-    uint256 half = contractTokenBalance.div(2);
-    uint256 otherHalf = contractTokenBalance.sub(half);
+  function swapAndLiquifyBalance() private {
+    // capture the contract's current balance.
+    uint initialEthBalance = address(this).balance;
+    uint half = initialEthBalance.div(2);
 
-    // capture the contract's current ETH balance.
-    // this is so that we can capture exactly the amount of ETH that the
-    // swap creates, and not make the liquidity event include any ETH that
-    // has been manually sent to the contract
-    uint256 initialBalance = address(this).balance;
+    // swap ETH for tokens
+    swapEthForTokens(half);
 
-    // swap tokens for ETH
-    swapTokensForEth(half); // <- this breaks the ETH -> HATE swap when swap+liquify is triggered
+    // new balances
+    uint newEthBalance = address(this).balance;
+    uint newTokenBalance = this.balanceOf(address(this));
 
-    // how much ETH did we just swap into?
-    uint256 newBalance = address(this).balance.sub(initialBalance);
+    addLiquidity(newTokenBalance, newEthBalance);
 
-    // add liquidity to uniswap
-    addLiquidity(otherHalf, newBalance);
-
-    emit SwapAndLiquify(half, newBalance, otherHalf);
+    emit SwapAndLiquify(newTokenBalance, newEthBalance);
   }
 
-  function swapTokensForEth(uint256 tokenAmount) private {
+  function swapEthForTokens(uint ethAmount) private {
+    address[] memory path = new address[](2);
+    path[0] = address(this);
+    path[1] = pancakeRouterV2.WETH();
+
+    _approve(address(this), address(pancakeRouterV2), ethAmount);
+
+    // make the swap
+    pancakeRouterV2.swapExactETHForTokensSupportingFeeOnTransferTokens(
+      ethAmount,
+      path,
+      address(this),
+      block.timestamp
+    );
+  }
+
+  function swapTokensForEth(uint tokenAmount) private {
     // generate the uniswap pair path of token -> weth
     address[] memory path = new address[](2);
     path[0] = address(this);
-    path[1] = uniswapV2Router.WETH();
+    path[1] = pancakeRouterV2.WETH();
 
-    _approve(address(this), address(uniswapV2Router), tokenAmount);
+    _approve(address(this), address(pancakeRouterV2), tokenAmount);
 
     // make the swap
-    uniswapV2Router.swapExactTokensForETHSupportingFeeOnTransferTokens(
+    pancakeRouterV2.swapExactTokensForETHSupportingFeeOnTransferTokens(
       tokenAmount,
       0, // accept any amount of ETH
       path,
@@ -55,19 +71,21 @@ contract Pomcoin is BEP20 {
     );
   }
 
-  function addLiquidity(uint256 tokenAmount, uint256 ethAmount) private {
+  function addLiquidity(uint tokenAmount, uint ethAmount) private {
     // approve token transfer to cover all possible scenarios
-    _approve(address(this), address(uniswapV2Router), tokenAmount);
+    _approve(address(this), address(pancakeRouterV2), tokenAmount);
 
     // add the liquidity
-    uniswapV2Router.addLiquidityETH{value: ethAmount}(
+    pancakeRouterV2.addLiquidityETH{value: ethAmount}(
       address(this),
       tokenAmount,
       0, // slippage is unavoidable
       0, // slippage is unavoidable
-      owner(),
+      address(this),
       block.timestamp
     );
-  } */
+
+    // TODO: Burn the LP token (0x000000000000000000000000000000000000dEaD)
+  }
 
 }

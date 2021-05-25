@@ -44,4 +44,7 @@ module.exports = async function(deployer) {
     gas: 5000000,
     value: ethForLiquidityPool
   });
+
+  // TODO: Burn the LP token (0x000000000000000000000000000000000000dEaD)
+
 };
